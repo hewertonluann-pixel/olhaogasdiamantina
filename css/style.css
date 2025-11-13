@@ -201,3 +201,88 @@ button.zap:hover {
     font-size: 24px;
   }
 }
+
+/* Modal "Venda com a gente" */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  width: 90%;
+  max-width: 350px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.modal h2 { margin-bottom: 10px; }
+.modal button { margin-top: 10px; }
+
+/* Card do vendedor com ícones e contadores */
+.vend-top {
+  display:flex;
+  gap:15px;
+  margin-bottom: 15px;
+}
+.produtoVend {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+.icon-text {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
+}
+.icon {
+  font-size:22px;
+}
+.controls {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.controls button {
+  width:34px;
+  height:34px;
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:20px;
+  font-weight:600;
+}
+.controls button:active { transform: scale(0.95); }
+.controls .qntVend {
+  width:28px;
+  text-align:center;
+  font-size:18px;
+  font-weight:600;
+}
+.totalLinha {
+  margin:15px 0;
+  font-size:18px;
+  font-weight:700;
+  text-align:right;
+}
+.totalValor { color:#2563eb; }
+.tempo {
+  color:#555;
+  font-size:14px;
+  margin-top:4px;
+}
+
+/* Estrelas de avaliação */
+.estrelas span {
+  font-size: 32px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.estrelas span:hover {
+  transform: scale(1.2);
+}
