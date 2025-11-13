@@ -2,41 +2,90 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Olha o Gás - Pedido Rápido</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Olha o Gás — Pedido</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
 <div class="container">
 
-  <h1 class="titulo">Olha o Gás 🔥</h1>
-  <p class="sub">Escolha um entregador e faça seu pedido rapidamente</p>
+  <h1 class="titulo">Olha o Gás Diamantina</h1>
+  <p class="sub">Peça gás ou água de forma rápida e fácil</p>
 
-  <!-- Lista de vendedores -->
-  <div id="listaVendedores" class="lista"></div>
+  <!-- BOTÃO VENDER -->
+  <button id="btnVenda" class="outline">Venda com a gente</button>
 
-  <!-- Formulário de pedido -->
-  <div id="formPedido" class="card" style="display:none">
-    <h2>Finalizar Pedido</h2>
+  <!-- CARD PRODUTOS -->
+  <div class="card">
+    <h2>O que você deseja pedir?</h2>
 
-    <label>Nome</label>
-    <input id="cliNome" type="text" placeholder="Seu nome">
+    <!-- GÁS -->
+    <div class="produto">
+      <div class="produto-info">
+        <span>Gás 13kg</span>
+      </div>
+      <div class="produto-controls">
+        <button class="menos" data-prod="gas">-</button>
+        <span id="qntGas">1</span>
+        <button class="mais" data-prod="gas">+</button>
+      </div>
+    </div>
 
-    <label>Endereço</label>
-    <input id="cliEnd" type="text" placeholder="Rua, número e bairro">
-
-    <label>WhatsApp</label>
-    <input id="cliZap" type="text" placeholder="(00) 00000-0000">
-
-    <label>Vendedor escolhido</label>
-    <input id="cliVend" type="text" disabled>
-
-    <button id="btnEnviar">Enviar Pedido</button>
-    <button id="btnCancelar" class="outline">Cancelar</button>
+    <!-- ÁGUA -->
+    <div class="produto">
+      <div class="produto-info">
+        <span>Água 20L</span>
+      </div>
+      <div class="produto-controls">
+        <button class="menos" data-prod="agua">-</button>
+        <span id="qntAgua">0</span>
+        <button class="mais" data-prod="agua">+</button>
+      </div>
+    </div>
   </div>
 
+  <!-- FORM CLIENTE -->
+  <div class="card">
+    <h2>Seus dados</h2>
+
+    <label>Seu nome</label>
+    <input id="cliNome" type="text" placeholder="Ex: João Silva">
+
+    <label>Endereço completo</label>
+    <input id="cliEnd" type="text" placeholder="Rua, número, bairro">
+
+    <label>WhatsApp</label>
+    <input id="cliZap" type="text" placeholder="38999999999">
+  </div>
+
+  <!-- LISTA VENDEDORES -->
+  <h2 class="titulo" style="margin-top:20px;">Escolha o entregador</h2>
+  <div id="listaVendedores" class="lista"></div>
+
+</div>
+
+<!-- MODAL SOLICITAÇÃO -->
+<div id="modalVendedor" class="modal">
+  <div class="modal-content">
+    <h2>Venda com a gente</h2>
+    <p>Preencha seus dados para analisarmos sua solicitação.</p>
+
+    <label>Nome completo</label>
+    <input type="text" id="solNome">
+
+    <label>WhatsApp</label>
+    <input type="text" id="solZap">
+
+    <label>Bairro</label>
+    <input type="text" id="solBairro">
+
+    <label>Observação (opcional)</label>
+    <input type="text" id="solObs">
+
+    <button id="btnEnviarSolic">Enviar Solicitação</button>
+    <button id="btnFecharSolic" class="outline">Fechar</button>
+  </div>
 </div>
 
 <script type="module" src="js/cliente.js"></script>
