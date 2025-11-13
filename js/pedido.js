@@ -1,76 +1,55 @@
-import { 
-  db, 
-  acompanharPedido 
-} from "./firebase.js";
-
+import { db } from "./firebase.js";
 import {
-  doc,
-  getDoc
+  doc, getDoc, updateDoc
 } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-// -----------------------
-// Elementos do HTML
-// -----------------------
-const statusEl = document.getElementById("status");
-const cliNome = document.getElementById("cliNome");
-const cliEnd = document.getElementById("cliEnd");
-const cliZap = document.getElementById("cliZap");
-
-const vendFoto = document.getElementById("vendFoto");
-const vendNome = document.getElementById("vendNome");
-const vendMarca = document.getElementById("vendMarca");
-const vendPreco = document.getElementById("vendPreco");
-
-const btnZap = document.getElementById("btnZap");
-
-// -----------------------
-// Pegar ID do pedido pela URL
-// -----------------------
 const params = new URLSearchParams(window.location.search);
-const pedidoID = params.get("id");
+const id = params.get("id");
 
-if (!pedidoID) {
-  alert("ID do pedido não encontrado.");
-}
+const box = document.getElementById("boxPedido");
+const avBox = document.getElementById("avaliacaoBox");
 
-// -----------------------
-// Acompanhar o pedido em tempo real
-// -----------------------
-acompanharPedido(pedidoID, async (snap) => {
+/* ============ CARREGAR PEDIDO ============ */
+
+async function carregar() {
+  const snap = await getDoc(doc(db, "pedidos", id));
 
   if (!snap.exists()) {
-    alert("Pedido não encontrado.");
+    box.innerHTML = "Pedido não encontrado";
     return;
   }
 
-  const pedido = snap.data();
+  const p = snap.data();
 
-  // Atualiza campos do pedido
-  statusEl.textContent = pedido.status;
-  cliNome.textContent = pedido.cliente_nome;
-  cliEnd.textContent = pedido.cliente_endereco;
-  cliZap.textContent = pedido.cliente_whatsapp;
+  box.innerHTML = `
+    <p><b>Cliente:</b> ${p.cliente_nome}</p>
+    <p><b>Endereço:</b> ${p.cliente_endereco}</p>
+    <p><b>WhatsApp:</b> ${p.cliente_whatsapp}</p>
+    <p><b>Gás:</b> ${p.qnt_gas}</p>
+    <p><b>Água:</b> ${p.qnt_agua}</p>
+    <p><b>Status:</b> ${p.status}</p>
+  `;
 
-  // Carregar dados do vendedor
-  const vendRef = doc(db, "vendedores", pedido.vendedor_id);
-  const vendSnap = await getDoc(vendRef);
-
-  if (vendSnap.exists()) {
-    const v = vendSnap.data();
-
-    vendFoto.src = v.fotoURL;
-    vendNome.textContent = v.nome;
-    vendMarca.textContent = v.marca;
-    vendPreco.textContent = v.preco;
-
-    // botão WhatsApp
-    btnZap.onclick = () => {
-      const msg = encodeURIComponent(
-        `Olá ${v.nome}, estou acompanhando meu pedido:\n` +
-        `Endereço: ${pedido.cliente_endereco}\n` +
-        `Status: ${pedido.status}`
-      );
-      window.open(`https://wa.me/${v.whatsapp}?text=${msg}`, "_blank");
-    };
+  if (p.status === "concluído" && !p.avaliacao) {
+    avBox.style.display = "block";
   }
-});
+}
+
+carregar();
+
+/* ============ AVALIAÇÃO ============ */
+
+document.getElementById("estrelas").onclick = async (e) => {
+  if (!e.target.dataset.n) return;
+
+  const nota = Number(e.target.dataset.n);
+
+  await updateDoc(doc(db, "pedidos", id), {
+    avaliacao: nota
+  });
+
+  document.getElementById("msgAvaliacao").innerHTML =
+    "Obrigado pela sua avaliação! ⭐";
+
+  avBox.style.display = "none";
+};
