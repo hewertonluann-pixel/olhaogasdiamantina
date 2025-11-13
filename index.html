@@ -13,50 +13,21 @@
   <h1 class="titulo">Olha o Gás Diamantina</h1>
   <p class="sub">Peça gás ou água de forma rápida e fácil</p>
 
-  <!-- BOTÃO VENDER -->
   <button id="btnVenda" class="outline">Venda com a gente</button>
-
-  <!-- CARD PRODUTOS -->
-  <div class="card">
-    <h2>O que você deseja pedir?</h2>
-
-    <!-- GÁS -->
-    <div class="produto">
-      <div class="produto-info">
-        <span>Gás 13kg</span>
-      </div>
-      <div class="produto-controls">
-        <button class="menos" data-prod="gas">-</button>
-        <span id="qntGas">1</span>
-        <button class="mais" data-prod="gas">+</button>
-      </div>
-    </div>
-
-    <!-- ÁGUA -->
-    <div class="produto">
-      <div class="produto-info">
-        <span>Água 20L</span>
-      </div>
-      <div class="produto-controls">
-        <button class="menos" data-prod="agua">-</button>
-        <span id="qntAgua">0</span>
-        <button class="mais" data-prod="agua">+</button>
-      </div>
-    </div>
-  </div>
+  <button id="btnHistorico" class="outline">Meus pedidos</button>
 
   <!-- FORM CLIENTE -->
   <div class="card">
     <h2>Seus dados</h2>
 
     <label>Seu nome</label>
-    <input id="cliNome" type="text" placeholder="Ex: João Silva">
+    <input id="cliNome" type="text">
 
     <label>Endereço completo</label>
-    <input id="cliEnd" type="text" placeholder="Rua, número, bairro">
+    <input id="cliEnd" type="text">
 
     <label>WhatsApp</label>
-    <input id="cliZap" type="text" placeholder="38999999999">
+    <input id="cliZap" type="text">
   </div>
 
   <!-- LISTA VENDEDORES -->
@@ -72,16 +43,16 @@
     <p>Preencha seus dados para analisarmos sua solicitação.</p>
 
     <label>Nome completo</label>
-    <input type="text" id="solNome">
+    <input id="solNome" type="text">
 
     <label>WhatsApp</label>
-    <input type="text" id="solZap">
+    <input id="solZap" type="text">
 
     <label>Bairro</label>
-    <input type="text" id="solBairro">
+    <input id="solBairro" type="text">
 
-    <label>Observação (opcional)</label>
-    <input type="text" id="solObs">
+    <label>Observação</label>
+    <input id="solObs" type="text">
 
     <button id="btnEnviarSolic">Enviar Solicitação</button>
     <button id="btnFecharSolic" class="outline">Fechar</button>

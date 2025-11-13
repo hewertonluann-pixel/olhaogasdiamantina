@@ -2,35 +2,29 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Acompanhar Pedido — Olha o Gás</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Status do Pedido</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
 <div class="container">
+  <h1>Seu Pedido</h1>
 
-  <h1 class="titulo">Acompanhar Pedido</h1>
-  <p class="sub">Atualizado em tempo real</p>
+  <div id="boxPedido" class="card">
+    Carregando...
+  </div>
 
-  <!-- Informações do pedido -->
-  <div id="cardPedido" class="card">
-    <h2>Status: <span id="status"></span></h2>
-
-    <p><b>Cliente:</b> <span id="cliNome"></span></p>
-    <p><b>Endereço:</b> <span id="cliEnd"></span></p>
-    <p><b>WhatsApp:</b> <span id="cliZap"></span></p>
-
-    <hr>
-
-    <h3>Entregador</h3>
-    <img id="vendFoto" class="fotoVend grande">
-    <p><b>Nome:</b> <span id="vendNome"></span></p>
-    <p><b>Marca:</b> <span id="vendMarca"></span></p>
-    <p><b>Preço:</b> R$ <span id="vendPreco"></span></p>
-
-    <button id="btnZap" class="zap">Falar no WhatsApp</button>
+  <div id="avaliacaoBox" class="card" style="display:none;">
+    <h3>Avalie o entregador</h3>
+    <div id="estrelas" class="estrelas">
+      <span data-n="1">⭐</span>
+      <span data-n="2">⭐</span>
+      <span data-n="3">⭐</span>
+      <span data-n="4">⭐</span>
+      <span data-n="5">⭐</span>
+    </div>
+    <p id="msgAvaliacao"></p>
   </div>
 
 </div>
