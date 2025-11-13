@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel do Gerente — Olha o Gás</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1 class="titulo">Painel do Gerente</h1>
+  <p class="sub">Gerencie vendedores e pedidos</p>
+
+  <!-- Login -->
+  <div id="areaLogin">
+    <button id="btnLogin">Entrar como Gerente</button>
+  </div>
+
+  <!-- Área do Gerente -->
+  <div id="areaGerente" style="display:none">
+
+    <h2>Vendedores</h2>
+    <div id="listaVendedores" class="lista"></div>
+
+    <h2>Pedidos</h2>
+    <div id="listaPedidos" class="lista"></div>
+
+    <button id="btnSair" class="outline">Sair</button>
+  </div>
+
+</div>
+
+<script type="module" src="js/gerente.js"></script>
+</body>
+</html>

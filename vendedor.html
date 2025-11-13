@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel do Vendedor — Olha o Gás</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1 class="titulo">Painel do Vendedor</h1>
+  <p class="sub">Gerencie seu status e pedidos</p>
+
+  <!-- Login -->
+  <div id="areaLogin">
+    <button id="btnLogin">Entrar com Google</button>
+  </div>
+
+  <!-- Área do vendedor -->
+  <div id="areaVendedor" style="display:none">
+
+    <div class="card perfil">
+      <img id="vendFoto" class="fotoVend grande">
+      <h2 id="vendNome"></h2>
+
+      <label>Preço do Gás</label>
+      <input id="vendPreco" type="number">
+
+      <label>Marca</label>
+      <input id="vendMarca" type="text">
+
+      <label>WhatsApp</label>
+      <input id="vendZap" type="text">
+
+      <label>Status</label>
+      <select id="vendStatus">
+        <option value="online">Online</option>
+        <option value="ocupado">Ocupado</option>
+        <option value="offline">Offline</option>
+      </select>
+
+      <button id="btnSalvar">Salvar Alterações</button>
+      <button id="btnSair" class="outline">Sair</button>
+    </div>
+
+    <h2>Pedidos</h2>
+    <div id="listaPedidos" class="lista"></div>
+
+  </div>
+
+</div>
+
+<script type="module" src="js/vendedor.js"></script>
+</body>
+</html>

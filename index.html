@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Olha o Gás - Pedido Rápido</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1 class="titulo">Olha o Gás 🔥</h1>
+  <p class="sub">Escolha um entregador e faça seu pedido rapidamente</p>
+
+  <!-- Lista de vendedores -->
+  <div id="listaVendedores" class="lista"></div>
+
+  <!-- Formulário de pedido -->
+  <div id="formPedido" class="card" style="display:none">
+    <h2>Finalizar Pedido</h2>
+
+    <label>Nome</label>
+    <input id="cliNome" type="text" placeholder="Seu nome">
+
+    <label>Endereço</label>
+    <input id="cliEnd" type="text" placeholder="Rua, número e bairro">
+
+    <label>WhatsApp</label>
+    <input id="cliZap" type="text" placeholder="(00) 00000-0000">
+
+    <label>Vendedor escolhido</label>
+    <input id="cliVend" type="text" disabled>
+
+    <button id="btnEnviar">Enviar Pedido</button>
+    <button id="btnCancelar" class="outline">Cancelar</button>
+  </div>
+
+</div>
+
+<script type="module" src="js/cliente.js"></script>
+</body>
+</html>

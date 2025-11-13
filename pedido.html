@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acompanhar Pedido — Olha o Gás</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1 class="titulo">Acompanhar Pedido</h1>
+  <p class="sub">Atualizado em tempo real</p>
+
+  <!-- Informações do pedido -->
+  <div id="cardPedido" class="card">
+    <h2>Status: <span id="status"></span></h2>
+
+    <p><b>Cliente:</b> <span id="cliNome"></span></p>
+    <p><b>Endereço:</b> <span id="cliEnd"></span></p>
+    <p><b>WhatsApp:</b> <span id="cliZap"></span></p>
+
+    <hr>
+
+    <h3>Entregador</h3>
+    <img id="vendFoto" class="fotoVend grande">
+    <p><b>Nome:</b> <span id="vendNome"></span></p>
+    <p><b>Marca:</b> <span id="vendMarca"></span></p>
+    <p><b>Preço:</b> R$ <span id="vendPreco"></span></p>
+
+    <button id="btnZap" class="zap">Falar no WhatsApp</button>
+  </div>
+
+</div>
+
+<script type="module" src="js/pedido.js"></script>
+</body>
+</html>
