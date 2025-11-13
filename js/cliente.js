@@ -1,97 +1,131 @@
-import { 
-  listarVendedores, 
-  criarPedido 
-} from "./firebase.js";
+import { db, listarVendedores, criarPedido } from "./firebase.js";
+import {
+  collection, addDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-// Elementos
+// ================================
+// QUANTIDADES
+// ================================
+let qntGas = 1;
+let qntAgua = 0;
+
+function atualizarVisor() {
+  document.getElementById("qntGas").textContent = qntGas;
+  document.getElementById("qntAgua").textContent = qntAgua;
+}
+
+document.querySelectorAll(".mais").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tipo = btn.dataset.prod;
+    if (tipo === "gas") qntGas++;
+    if (tipo === "agua") qntAgua++;
+    atualizarVisor();
+  });
+});
+
+document.querySelectorAll(".menos").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tipo = btn.dataset.prod;
+    if (tipo === "gas" && qntGas > 1) qntGas--;
+    if (tipo === "agua" && qntAgua > 0) qntAgua--;
+    atualizarVisor();
+  });
+});
+
+// ================================
+// MODAL "VENDA COM A GENTE"
+// ================================
+const modal = document.getElementById("modalVendedor");
+document.getElementById("btnVenda").addEventListener("click", () => {
+  modal.style.display = "flex";
+});
+document.getElementById("btnFecharSolic").addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+document.getElementById("btnEnviarSolic").addEventListener("click", async () => {
+  const nome = document.getElementById("solNome").value;
+  const zap = document.getElementById("solZap").value;
+  const bairro = document.getElementById("solBairro").value;
+  const obs = document.getElementById("solObs").value;
+
+  if (!nome || !zap || !bairro) {
+    alert("Preencha nome, WhatsApp e bairro.");
+    return;
+  }
+
+  await addDoc(collection(db, "solicitacoes_vendedor"), {
+    nome,
+    whatsapp: zap,
+    bairro,
+    observacao: obs || "",
+    status: "pendente",
+    data: serverTimestamp()
+  });
+
+  alert("Sua solicitação foi enviada!");
+  modal.style.display = "none";
+});
+
+// ================================
+// CARREGAR VENDEDORES
+// ================================
 const lista = document.getElementById("listaVendedores");
-const form = document.getElementById("formPedido");
 
-const cliNome = document.getElementById("cliNome");
-const cliEnd = document.getElementById("cliEnd");
-const cliZap = document.getElementById("cliZap");
-const cliVend = document.getElementById("cliVend");
-
-const btnEnviar = document.getElementById("btnEnviar");
-const btnCancelar = document.getElementById("btnCancelar");
-
-let vendedorSelecionado = null;
-
-// =========================
-// 1. Carregar vendedores
-// =========================
 async function carregarVendedores() {
-  lista.innerHTML = "<p>Carregando...</p>";
-
   const snap = await listarVendedores();
   lista.innerHTML = "";
 
   snap.forEach(doc => {
     const v = doc.data();
-    const id = doc.id;
 
-    const card = document.createElement("div");
-    card.className = "card vendedor";
-
-    card.innerHTML = `
-      <img src="${v.fotoURL}" class="fotoVend">
+    const div = document.createElement("div");
+    div.className = "card vendedor";
+    div.innerHTML = `
+      <img src="${v.fotoURL || 'https://i.pravatar.cc/100'}" class="fotoVend">
       <div class="info">
         <h3>${v.nome}</h3>
-        <p>Marca: ${v.marca}</p>
-        <p>Preço: R$ ${v.preco}</p>
-        <span class="status ${v.status}">${v.status}</span>
+        <p>${v.marca || ''} - R$ ${v.preco || ''}</p>
+        <p class="status ${v.status}">${v.status}</p>
       </div>
-      <button class="btnPedir">Pedir agora</button>
+      <button class="btnEscolher" data-id="${doc.id}">Pedir</button>
     `;
 
-    // clique em pedir
-    card.querySelector(".btnPedir").addEventListener("click", () => {
-      vendedorSelecionado = { id, ...v };
-      abrirFormulario();
-    });
-
-    lista.appendChild(card);
+    lista.appendChild(div);
   });
 }
 
 carregarVendedores();
 
-// =========================
-// 2. Abrir formulário
-// =========================
-function abrirFormulario() {
-  cliVend.value = vendedorSelecionado.nome;
-  form.style.display = "block";
-  window.scrollTo(0, document.body.scrollHeight);
-}
+// ================================
+// ENVIAR PEDIDO
+// ================================
+document.addEventListener("click", async (e) => {
+  if (!e.target.classList.contains("btnEscolher")) return;
 
-// =========================
-// 3. Cancelar
-// =========================
-btnCancelar.addEventListener("click", () => {
-  form.style.display = "none";
-  vendedorSelecionado = null;
-});
+  const vendedorID = e.target.dataset.id;
 
-// =========================
-// 4. Enviar Pedido
-// =========================
-btnEnviar.addEventListener("click", async () => {
-  if (!cliNome.value || !cliEnd.value || !cliZap.value) {
-    alert("Preencha todas as informações.");
+  const nome = document.getElementById("cliNome").value;
+  const end = document.getElementById("cliEnd").value;
+  const zap = document.getElementById("cliZap").value;
+
+  if (!nome || !end || !zap) {
+    alert("Preencha todos os seus dados antes de enviar o pedido.");
     return;
   }
 
   const pedido = {
-    cliente_nome: cliNome.value,
-    cliente_endereco: cliEnd.value,
-    cliente_whatsapp: cliZap.value,
-    vendedor_id: vendedorSelecionado.id,
-    status: "solicitado"
+    cliente_nome: nome,
+    cliente_endereco: end,
+    cliente_whatsapp: zap,
+    vendedor_id: vendedorID,
+    status: "solicitado",
+    qnt_gas: qntGas,
+    qnt_agua: qntAgua,
+    data: serverTimestamp()
   };
 
   const docRef = await criarPedido(pedido);
 
-  // Redireciona para acompanhamento
   window.location.href = `pedido.html?id=${docRef.id}`;
 });
